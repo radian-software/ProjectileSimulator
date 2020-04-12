@@ -16,6 +16,18 @@ if not PRINT:
     def print(*args):
         pass
 
+_Text = Text
+def Text(*args, **kwargs):
+    t = _Text(*args, **kwargs)
+    t.setSize(10)
+    return t
+
+_Entry = Entry
+def Entry(*args, **kwargs):
+    e = _Entry(*args, **kwargs)
+    e.setSize(10)
+    return e
+
 _sqrt = sqrt
 def sqrt(x):
     if equal(x, 0): return 0
@@ -663,34 +675,34 @@ class Quadratic():
 def launch():
     global win, fields, checks, labels, svars, cbutton, invalidValues, ps
     global STOP
-    win = GraphWin('Projectile Simulation 2013 - Radon Rosborough', 800, 600, autoflush=False)
+    win = GraphWin('Projectile Simulation 2013 - Radon Rosborough', 1850, 1200, autoflush=False)
     fields, checks, labels, svars = [], [], [], []
     names = ['Initial x (m)', 'Initial y (m)', 'Initial v (m/s)', 'Initial vx (m/s)', 'Initial vy (m/s)', 'Initial time (s)', 'Initial angle (deg)', 'Final x (m)', 'Final y (m)', 'Final v (m/s)', 'Final vx (m/s)', 'Final vy (m/s)', 'Final time (s)', 'Final angle (deg)', 'Change in x (m)', 'Change in y (m)', 'Change in v (m/s)', 'Change in vx (m/s)', 'Change in vy (m/s)', 'Change in time (s)', 'Change in angle (deg)']
     for y in range(3):
         for x in range(7):
-            fields.append(Entry(Poing(85+x*110, 425+y*75), 10))
+            fields.append(Entry(Poing(170+x*250, 850+y*150), 10))
             i = len(fields)-1
             fields[-1].text.trace('w', lambda name, index, mode, var=fields[i].text, i=i:checkUpdate(var, i))
-            labels.append(Text(Poing(85+x*110, 405+y*75), names[y*7+x]))
-            checks.append(Checkbox(Poing(35+x*110, 425+y*75), False))
+            labels.append(Text(Poing(170+x*250, 810+y*150), names[y*7+x]))
+            checks.append(Checkbox(Poing(70+x*250, 850+y*150), False))
 
-    fields.append(Entry(Poing(85+0*110, 425+-1*75), 10))
+    fields.append(Entry(Poing(170+0*250, 850+-1*150), 10))
     i = len(fields)-1
     fields[-1].text.trace('w', lambda name, index, mode, var=fields[i].text, i=i:checkUpdate(var, i))
-    labels.append(Text(Poing(85+0*110, 405+-1*75), 'Initial direction (up/down/none)'))
-    checks.append(Checkbox(Poing(35+0*110, 425+-1*75), False))
+    labels.append(Text(Poing(170+0.5*250, 810+-1*150), 'Initial direction (up/down/none)'))
+    checks.append(Checkbox(Poing(70+0*250, 850+-1*150), False))
 
-    fields.append(Entry(Poing(85+6*110, 425+-1*75), 10))
+    fields.append(Entry(Poing(170+6*250, 850+-1*150), 10))
     i = len(fields)-1
     fields[-1].text.trace('w', lambda name, index, mode, var=fields[i].text, i=i:checkUpdate(var, i))
-    labels.append(Text(Poing(85+6*110-25, 405+-1*75), 'Final direction (up/down/none)'))
-    checks.append(Checkbox(Poing(35+6*110, 425+-1*75), False))
+    labels.append(Text(Poing(170+5.5*250-50, 810+-1*150), 'Final direction (up/down/none)'))
+    checks.append(Checkbox(Poing(70+6*250, 850+-1*150), False))
 
-    fields.append(Entry(Poing(85+3*110, 425+-1*75), 10))
+    fields.append(Entry(Poing(170+3*250, 850+-1*150), 10))
     i = len(fields)-1
     fields[-1].text.trace('w', lambda name, index, mode, var=fields[i].text, i=i:checkUpdate(var, i))
-    labels.append(Text(Poing(85+3*110, 405+-1*75), 'Horizontal direction (left/right/none)'))
-    checks.append(Checkbox(Poing(35+3*110, 425+-1*75), False))
+    labels.append(Text(Poing(170+3*250, 810+-1*150), 'Horizontal direction (left/right/none)'))
+    checks.append(Checkbox(Poing(70+3*250, 850+-1*150), False))
 
     for field in fields:
         field.draw(win)
@@ -710,23 +722,23 @@ def launch():
     for field in fields:
         field.entry.bind('<space>', lambda event, field=field: enableField(field))
 
-    cbutton = Button(Poing(740, 10), Poing(790, 40), 'Close')
+    cbutton = Button(Poing(1480, 20), Poing(1580, 80), 'Close')
     cbutton.draw(win)
 
-    rbutton = Button(Poing(740, 50), Poing(790, 80), 'Reset')
+    rbutton = Button(Poing(1480, 100), Poing(1580, 160), 'Reset')
     rbutton.draw(win)
 
-    invalidValues = Text(Poing(400, 150), 'Error: Contradictary values')
+    invalidValues = Text(Poing(800, 300), 'Error: Contradictary values')
     invalidValues.setSize(36)
 
     ps = Pointset(i=Point(), f=Point(), c=Point())
 
     checkUpdate(n, n)
 
-    Line(Poing(10, 10), Poing(730, 10)).draw(win)
-    Line(Poing(10, 10), Poing(10, 315)).draw(win)
-    Line(Poing(730, 10), Poing(730, 315)).draw(win)
-    Line(Poing(10, 315), Poing(730, 315)).draw(win)
+    Line(Poing(20, 20), Poing(1460, 20)).draw(win)
+    Line(Poing(20, 20), Poing(20, 630)).draw(win)
+    Line(Poing(1460, 20), Poing(1460, 630)).draw(win)
+    Line(Poing(20, 630), Poing(1460, 630)).draw(win)
 
     win.flush()
 
